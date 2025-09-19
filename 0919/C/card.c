@@ -75,7 +75,9 @@ void display_card(struct trump m_card[]) {
 }
 
 구문 출력 결과
-<img width="368" height="72" alt="Image" src="https://github.com/user-attachments/assets/22f319d3-75e2-46d4-a478-a56f77a92f29" />
+
+<img width="368" height="72" alt="Image" src="https://github.com/user-attachments/assets/d40dda27-817d-4565-a270-b1739250a4bd" />
+    
 // 카드 섞기 함수
 void shuffle_card(struct trump m_card[]) {
     int i, rnd;
