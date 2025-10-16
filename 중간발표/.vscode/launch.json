@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Slot (External Console)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}\\app8_8_1.exe",
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "externalConsole": true,    // ★ 여기가 핵심
+      "stopAtEntry": false
+    }
+  ]
+}
