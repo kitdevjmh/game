@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>던전 오브 다이스</title>
+  <link rel="stylesheet" href="intro.css" />
+</head>
+<body>
+
+  <!-- ==================== [A] 인트로 ==================== -->
+  <div id="intro" class="intro">
+    <img id="logo" src="./image/gamelogo.png" alt="게임 로고" />
+    <div id="status" class="status">자원을 불러오는 중…</div>
+
+    <div id="diceBar" class="dice-bar" role="progressbar" aria-label="로딩 진행률">
+      <div class="track rock">
+        <div id="fill" class="fill">
+          <div class="lava-flow"></div>
+          <div class="lava-noise"></div>
+          <div id="lavaBubbles" class="lava-bubbles"></div>
+          <div class="lava-gloss"></div>
+        </div>
+      </div>
+      <div id="token" class="token">
+        <svg class="die" viewBox="0 0 200 200" data-face="1">
+          <rect x="10" y="10" width="180" height="180" rx="28" ry="28" fill="#fff" stroke="#111" stroke-width="6"></rect>
+          <circle class="pip f1 f3 f5 f6" cx="50" cy="50" r="12"/>
+          <circle class="pip f2 f3 f4 f5 f6" cx="150" cy="150" r="12"/>
+          <circle class="pip f4 f5 f6" cx="150" cy="50" r="12"/>
+          <circle class="pip f4 f5 f6" cx="50" cy="150" r="12"/>
+          <circle class="pip f5" cx="100" cy="100" r="12"/>
+          <circle class="pip f6" cx="50" cy="100" r="12"/>
+          <circle class="pip f6" cx="150" cy="100" r="12"/>
+        </svg>
+        <div id="shadow" class="shadow"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== [B] 클릭 전환 및 게이트 ==================== -->
+  <div id="veil" class="click-veil"></div>
+  <div id="gate" class="gate"><div class="top"></div><div class="bottom"></div></div>
+
+  <!-- ==================== [C] 오버레이 로딩 ==================== -->
+  <div id="lavaLoading" class="loading-screen" style="display:none;">
+    <div class="loading-inner">
+      <div id="loadingStatus" class="status">자원을 불러오는 중…</div>
+      <div id="loadingDiceBar" class="dice-bar">
+        <div class="track rock">
+          <div id="loadingFill" class="fill">
+            <div class="lava-flow"></div>
+            <div class="lava-noise"></div>
+            <div id="overlayLavaBubbles" class="lava-bubbles"></div>
+            <div class="lava-gloss"></div>
+          </div>
+        </div>
+        <div id="loadingToken" class="token">
+          <svg class="die" viewBox="0 0 200 200" data-face="1">
+            <rect x="10" y="10" width="180" height="180" rx="28" ry="28" fill="#fff" stroke="#111" stroke-width="6"></rect>
+            <circle class="pip f1 f3 f5 f6" cx="50" cy="50"  r="12"/>
+            <circle class="pip f2 f3 f4 f5 f6" cx="150" cy="150" r="12"/>
+            <circle class="pip f4 f5 f6" cx="150" cy="50"  r="12"/>
+            <circle class="pip f4 f5 f6" cx="50"  cy="150" r="12"/>
+            <circle class="pip f5" cx="100" cy="100" r="12"/>
+            <circle class="pip f6" cx="50"  cy="100" r="12"/>
+            <circle class="pip f6" cx="150" cy="100" r="12"/>
+          </svg>
+          <div id="loadingShadow" class="shadow"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== [D] 메인 게임 컨테이너 ==================== -->
+  <div id="gameContainer" class="game-container" style="display:none;">
+    <div class="header-panel"><h2 id="main-title">던전 오브 다이스</h2></div>
+    <div class="stats-panel"><p id="player-stats">로딩 중...</p></div>
+    <div class="result-panel"><div id="dice-result" class="result-text">로딩 완료!</div></div>
+    <div class="action-panel">
+      <button id="main-button">액션</button>
+      <button id="inventory-button">인벤토리</button>
+    </div>
+  </div>
+
+  <!-- ==================== [E] 로비 ==================== -->
+  <div id="lobby" class="lobby" style="display:none;">
+    <img id="lobbyLogo" class="lobby-logo" src="./image/gamelogo.png" alt="로고" />
+    <img id="heroSprite" class="lobby-hero" src="./image/character.png" alt="플레이어" />
+    <div class="lobby-buttons">
+      <button id="btnMyChar" class="img-btn"><img src="./image/chabtn.png" alt="내 캐릭터"></button>
+      <button id="btnStart"   class="img-btn"><img src="./image/start.png"   alt="게임 시작"></button>
+      <button id="btnInventory" class="img-btn"><img src="./image/inven.png" alt="인벤토리"></button>
+    </div>
+  </div>
+
+  <!-- ==================== [F] 어드벤처(탐험) 화면 ==================== -->
+  <section id="adventure-screen" class="adventure hidden" aria-label="게임 화면">
+    <div class="adv-bg"></div>
+
+    <div class="adv-stack">
+      <div class="stage-sign">
+        <img class="sign-img" src="./image/stagename.png" alt="stage name">
+      </div>
+
+      <div class="adv-card">
+        <ul class="statbar" role="list">
+          <div class="stat-left">
+            <li class="stat"><img class="icon-hp" src="./image/heart.png" alt=""><span id="stat-hp">100</span></li>
+            <li class="stat"><img class="icon-atk" src="./image/atk.png" alt=""><span id="stat-atk">10</span></li>
+            <li class="stat"><img class="icon-def" src="./image/def.png" alt=""><span id="stat-def">5</span></li>
+          </div>
+          <div class="stat-right">
+            <li class="stat"><img class="icon-gold" src="./image/gold.png" alt=""><span id="stat-gold">0</span></li>
+          </div>
+        </ul>
+
+        <div class="adv-hero">
+          <img class="hero-img" src="./image/character.png" alt="">
+        </div>
+
+        <h2 class="ask">무엇을 할까?</h2>
+        <p class="hint">로비로 돌아가려면 스페이스 바를 누르세요</p>
+
+        <div class="actions">
+          <button class="action-btn" id="btn-explore" type="button" aria-label="탐험하기">
+            <img class="btn-explore-img"   src="./image/gamestart.png" alt="">
+          </button>
+          <button class="action-btn" id="btn-inventory" type="button" aria-label="인벤토리">
+            <img class="btn-inventory-img" src="./image/inventory.png" alt="">
+          </button>
+        </div>
+      </div> <!-- /adv-card -->
+    </div>   <!-- /adv-stack -->
+  </section>
+
+
+  <!-- ==================== [G’] 전투 준비(주사위) 오버레이 ==================== -->
+<section id="battle" class="battle hidden" aria-label="전투 준비">
+  <div class="battle-bg"></div>
+
+  <!-- 상단 스테이지 표지판 -->
+  <div class="stage-sign">
+    <img src="./image/stagename.png" alt="">
+  </div>
+
+  <div class="battle-ui">
+    <h2 class="battle-title">몬스터 출현!</h2>
+    <p class="battle-text" id="battle-desc">
+      거미이(가) 나타났다!<br>
+      <br>전투에 돌입하기 전 공격력, 방어력 주사위를 굴립니다.
+    </p>
+
+    <div class="battle-actors">
+      <img class="actor hero"  id="battle-hero"  src="./image/character.png" alt="hero">
+      <img class="actor enemy" id="battle-enemy" src="./image/spider.png"     alt="enemy">
+    </div>
+
+  <ul class="battle-stat">
+    <li class="stat stat-hp">
+      <img src="./image/heart.png" alt="HP">
+      <span id="b-hp">100</span>
+    </li>
+    <li class="stat stat-atk">
+      <img src="./image/atk.png" alt="ATK">
+      <span id="b-atk">10</span>
+    </li>
+    <li class="stat stat-def">
+      <img src="./image/def.png" alt="DEF">
+      <span id="b-def">5</span>
+    </li>
+    <li class="stat stat-gold">
+      <img src="./image/gold.png" alt="GOLD">
+      <span id="b-gold">0</span>
+    </li>
+  </ul>
+
+     <!-- 버튼 이미지로 교체 -->
+    <div class="battle-btns">
+      <img id="btn-attack" src="./image/atkdice.png" alt="공격" class="battle-btn-img">
+      <img id="btn-defense" src="./image/defdice.png" alt="방어" class="battle-btn-img">
+    </div>
+  </div>
+</section>
+
+
+  <script src="./main.js" defer></script>
+</body>
+</html>
